@@ -19,17 +19,17 @@ afterAll(async () => {
 
   describe('testing the server', () => {
 
-    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkphbGFsIiwicGFzc3dvcmQiOiIkMmIkMDUkenNIWFFjZFMwVHVLLlRsTVE0RnFyT2JUTU9YZTFkUENYU2d3UXNNN2hIZlhwNlZtTmdkRzYiLCJpYXQiOjE2ODc4MTkwNDR9.lTDPeH57UCOvWaRnQKZFsEGZn1X9w_7RmmMMx8XKuJU"
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNhZWVkIiwicGFzc3dvcmQiOiIkMmIkMDUkWW4wNklnZEU1VlRaY04waDQyTkRYdTBpN0FjTHNScVpTRFpQdGRReS5sdExhRzZJNjJzSUMiLCJpYXQiOjE2ODc4MjAwNzh9.E9y3YDQ3ZoEisYSZXeexSzZA_UTcXNYinV3Kq0oOWGA"
 
     it('POST to /signup to create a new user.', async () => {
       const res = await req.post('/signup').send({
-          username: 'Jalal',
-          password: '1234'
+          username: 'Saeed',
+          password: '12345'
         });
 
         expect(res.status).toBe(201);
-        expect(res.body.username).toEqual('Jalal')
-        expect( await bcrypt.compare('1234',res.body.password)).toEqual(true)
+        expect(res.body.username).toEqual('Saeed')
+        expect( await bcrypt.compare('12345',res.body.password)).toEqual(true)
   });
 
     it('should successfully access an authenticated route', async () => {
