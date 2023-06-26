@@ -35,10 +35,11 @@ afterAll(async () => {
   });
   it('POST to /signin to login as a user (use basic auth). & Need tests for auth middleware and the routes.', async () => {
     const res = await req
-      .post('/signin')
-      .set('Authorization', `Basic ${await base64.encode('Jalal:1234')}` )
-     
-    
+    .post('/signin')
+    .set('Authorization', `Basic ${base64.encode('Jalal:1234')}` )
+    res.headers.authorization =  `Basic ${base64.encode('Jalal:1234')}`
+    console.log(res.headers)
+    console.log(res.status)
     // console.log(res.request._header.authorization); // Log the authorization header value
     expect(res.status).toBe(200); // since Jalal is in the database, the auth middleware will work fine and send 200 status code.
     expect(res.request._header.authorization).toBe('Basic SmFsYWw6MTIzNA==');
