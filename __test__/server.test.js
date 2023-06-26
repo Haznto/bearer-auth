@@ -19,30 +19,40 @@ afterAll(async () => {
 
   describe('testing the server', () => {
 
-    
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNhZWVkIiwicGFzc3dvcmQiOiIkMmIkMDUkWW4wNklnZEU1VlRaY04waDQyTkRYdTBpN0FjTHNScVpTRFpQdGRReS5sdExhRzZJNjJzSUMiLCJpYXQiOjE2ODc4MjAwNzh9.E9y3YDQ3ZoEisYSZXeexSzZA_UTcXNYinV3Kq0oOWGA"
 
     it('POST to /signup to create a new user.', async () => {
       const res = await req.post('/signup').send({
-          username: 'Jalal',
-          password: '1234'
+          username: 'Saeed',
+          password: '12345'
         });
 
-        const data = await 
-        
         expect(res.status).toBe(201);
-        expect(res.body.username).toEqual('Jalal')
-        expect( await bcrypt.compare('1234',res.body.password)).toEqual(true)
-  });
-  it('POST to /signin to login as a user (use basic auth). & Need tests for auth middleware and the routes.', async () => {
-    const res = await req
-      .post('/signin')
-      .set('Authorization', `Basic ${await base64.encode('Jalal:1234')}` )
-     
-    
-    // console.log(res.request._header.authorization); // Log the authorization header value
-    expect(res.status).toBe(200); // since Jalal is in the database, the auth middleware will work fine and send 200 status code.
-    expect(res.request._header.authorization).toBe('Basic SmFsYWw6MTIzNA==');
-    
+        expect(res.body.username).toEqual('Saeed')
+        expect( await bcrypt.compare('12345',res.body.password)).toEqual(true)
   });
 
-  })
+    it('should successfully access an authenticated route', async () => {
+      const res = await req
+        .get('/secretstuff')
+        .set('Authorization', `Bearer ${token}`);
+  
+      // Assert the expected behavior based on the authentication status
+      expect(res.status).toBe(200);
+      // ...
+    });
+  
+    it('should fail to access an authenticated route without a token', async () => {
+      const res = await req
+        .get('/secretstuff');
+  
+      // Assert the expected behavior based on the authentication status
+      expect(res.status).toBe(500);
+      // ...
+    });
+  
+    // Additional test cases for different authentication scenarios
+  });
+  
+
+  
