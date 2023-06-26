@@ -13,7 +13,7 @@ const useraccount = (sequelize,DataTypes) => sequelize.define('useraccount',{
         allowNull:false
     },
     token: {
-        type: DataTypes.VIRTUAL
+        type: DataTypes.VIRTUAL,
     }
 })
 
