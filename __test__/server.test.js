@@ -19,7 +19,7 @@ afterAll(async () => {
 
   describe('testing the server', () => {
 
-    
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkphbGFsIiwicGFzc3dvcmQiOiIkMmIkMDUkenNIWFFjZFMwVHVLLlRsTVE0RnFyT2JUTU9YZTFkUENYU2d3UXNNN2hIZlhwNlZtTmdkRzYiLCJpYXQiOjE2ODc4Njg2MTF9.DeVpSz1oIFY1Dy6E4O_PuMT8X7alxikawuEqbR3rrbE"
 
     it('POST to /signup to create a new user.', async () => {
       const res = await req.post('/signup').send({
@@ -45,4 +45,22 @@ afterAll(async () => {
     
   });
 
+  it('should successfully access an authenticated route', async () => {
+    const res = await req
+      .get('/secretstuff')
+      .set('Authorization', `Bearer ${token}`);
+
+    // Assert the expected behavior based on the authentication status
+    expect(res.status).toBe(200);
+    // ...
+  });
+
+  it('should fail to access an authenticated route without a token', async () => {
+    const res = await req
+      .get('/secretstuff');
+
+    // Assert the expected behavior based on the authentication status
+    expect(res.status).toBe(500);
+    // ...
+  });
   })
